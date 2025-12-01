@@ -71,7 +71,7 @@ namespace ElevenLabs.TextToSpeech
             
             if (DisableRetention.HasValue)
             {
-                parameters.Add(EnableLoggingParameter, DisableRetention.Value.ToString().ToLower());
+                parameters.Add(EnableLoggingParameter, DisableRetention.GetValueOrDefault().ToString().ToLower());
             }
 
             var endpoint = $"/{request.Voice.Id}";
