@@ -105,11 +105,6 @@ namespace ElevenLabs.TextToSpeech
         /// while with ‘false’, it will be skipped.
         /// Cannot be turned on for ‘eleven_turbo_v2_5’ model.
         /// </param>
-        /// <param name="enableLogging">
-        /// When <c>enable_logging</c> is set to <c>false</c>, zero retention mode will be used for the request.
-        /// This will mean history features are unavailable for this request, including request stitching.
-        /// Zero retention mode may only be used by enterprise customers.
-        /// </param>
         public TextToSpeechRequest(
             Voice voice,
             string text,
@@ -124,8 +119,7 @@ namespace ElevenLabs.TextToSpeech
             string languageCode = null,
             bool withTimestamps = false,
             int? seed = null,
-            bool? applyTextNormalization = null,
-            bool? enableLogging = null)
+            bool? applyTextNormalization = null)
         {
             if (string.IsNullOrWhiteSpace(text))
             {
@@ -168,7 +162,6 @@ namespace ElevenLabs.TextToSpeech
             {
                 ApplyTextNormalization = applyTextNormalization.Value ? "on" : "off";
             }
-            EnableLogging = enableLogging;
         }
 
         [JsonPropertyName("text")]
@@ -221,8 +214,5 @@ namespace ElevenLabs.TextToSpeech
         [JsonPropertyName("apply_text_normalization")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public string ApplyTextNormalization { get; }
-
-        [JsonIgnore]
-        public bool? EnableLogging { get; }
     }
 }

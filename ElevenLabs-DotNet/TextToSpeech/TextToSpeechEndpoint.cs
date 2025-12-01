@@ -25,6 +25,13 @@ namespace ElevenLabs.TextToSpeech
         private const string OptimizeStreamingLatencyParameter = "optimize_streaming_latency";
         private const string EnableLoggingParameter = "enable_logging";
 
+        /// <summary>
+        /// When set to <c>true</c>, zero retention mode will be used for the request.
+        /// This will mean history features are unavailable for this request, including request stitching.
+        /// Zero retention mode may only be used by enterprise customers.
+        /// </summary>
+        public bool? DisableRetention { get; set; }
+
         public TextToSpeechEndpoint(ElevenLabsClient client) : base(client) { }
 
         protected override string Root => "text-to-speech";
@@ -62,9 +69,9 @@ namespace ElevenLabs.TextToSpeech
             }
 #pragma warning restore CS0618 // Type or member is obsolete
             
-            if (request.EnableLogging.HasValue)
+            if (DisableRetention.HasValue)
             {
-                parameters.Add(EnableLoggingParameter, request.EnableLogging.GetValueOrDefault() ? "true" : "false");
+                parameters.Add(EnableLoggingParameter, DisableRetention.GetValueOrDefault() ? "false" : "true");
             }
 
             var endpoint = $"/{request.Voice.Id}";
